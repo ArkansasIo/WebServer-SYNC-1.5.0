@@ -35,6 +35,19 @@ cargo install --git https://github.com/ArkansasIo/WebServer-SYNC-1.5.0 --path ap
 
 The installed binary is `webserver-sync-1-5-0`.
 
+### Install from web browser (Android / iPhone / iPad)
+
+Open these links directly in your mobile browser to view the step-by-step install guide for your device:
+
+- 🤖 **Android** → [output/android/INSTALL.md](https://github.com/ArkansasIo/WebServer-SYNC-1.5.0/blob/main/output/android/INSTALL.md)
+- 🍎 **iPhone / iPad** → [output/iphone/INSTALL.md](https://github.com/ArkansasIo/WebServer-SYNC-1.5.0/blob/main/output/iphone/INSTALL.md)
+
+After the server is running, open the mobile control panel directly in any browser:
+
+```
+http://<host-ip>:<port>/~~penguin/panel
+```
+
 
 ## CLI Usage
 
