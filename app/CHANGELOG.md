@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to the WebServer SYNC **CLI app** will be documented here.
+All notable changes to the WebServer SYNC 1.5.0 **CLI app** will be documented here.
 
 
 ## [Unreleased]
@@ -12,7 +12,7 @@ All notable changes to the WebServer SYNC **CLI app** will be documented here.
 ## [0.2.6] - 2023-11-26
 - Improve `cargo doc` workflow by treating `remove` file system events as less important in watcher. Adds `--removal-debounce` flag. See [385b63](https://github.com/ArkansasIo/WebServer-SYNC-1.5.0/commit/385b6395142aff28fa5063162a8023e1392b0cf1).
 - Updated the library to v0.1.8 ⇒ [check its changelog](../lib/CHANGELOG.md#017---2022-06-22).
-  - Add basic HTTP range request support for the file server. With this, video files served by WebServer SYNC can be played by Safari.
+  - Add basic HTTP range request support for the file server. With this, video files served by WebServer SYNC 1.5.0 can be played by Safari.
   - Add body sniffing to detect HTML content (and insert reload script) more often (see #11)
 
 ## [0.2.5] - 2022-06-22

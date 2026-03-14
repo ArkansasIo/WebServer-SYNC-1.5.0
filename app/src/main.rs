@@ -101,15 +101,15 @@ async fn reload(args: &Args) -> Result<()> {
 }
 
 fn print_welcome_message() {
-    bunt::println!("{$blue+bold+intense}WebServer SYNC{/$}");
+    bunt::println!("{$blue+bold+intense}WebServer SYNC 1.5.0{/$}");
     println!();
     println!("You have to specify a subcommand. Example usages:");
-    bunt::println!("   ‣ Serve a directory: {$yellow}webserver-sync serve ./target{/$}");
-    bunt::println!("   ‣ Reload all browser sessions: {$yellow}webserver-sync reload{/$}");
+    bunt::println!("   ‣ Serve a directory: {$yellow}webserver-sync-1-5-0 serve ./target{/$}");
+    bunt::println!("   ‣ Reload all browser sessions: {$yellow}webserver-sync-1-5-0 reload{/$}");
     bunt::println!("   ‣ Forward requests to proxy and serve one directory on a subpath:");
-    bunt::println!("         {$yellow}webserver-sync proxy localhost:8000 -m /assets:frontend/dist{/$}");
+    bunt::println!("         {$yellow}webserver-sync-1-5-0 proxy localhost:8000 -m /assets:frontend/dist{/$}");
 
     println!();
-    bunt::println!("For more information, run {$yellow}webserver-sync -h{/$} for a short CLI overview");
-    bunt::println!("or {$yellow}webserver-sync --help{/$} for a detailed description.");
+    bunt::println!("For more information, run {$yellow}webserver-sync-1-5-0 -h{/$} for a short CLI overview");
+    bunt::println!("or {$yellow}webserver-sync-1-5-0 --help{/$} for a detailed description.");
 }
