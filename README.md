@@ -112,6 +112,7 @@ Mobile install/output system files:
 - Android logo: [output/android/logo.svg](output/android/logo.svg)
 - Android build script: [output/android/build.ps1](output/android/build.ps1)
 - Android run script: [output/android/run.ps1](output/android/run.ps1)
+- Android install-from-GitHub script: [output/android/install-from-github.ps1](output/android/install-from-github.ps1)
 - iPhone/iPad: [output/iphone/INSTALL.md](output/iphone/INSTALL.md)
 - iPhone/iPad API config template: [output/iphone/api-config.example.json](output/iphone/api-config.example.json)
 - iPhone/iPad app config: [output/iphone/api-app.example.json](output/iphone/api-app.example.json)
@@ -120,6 +121,7 @@ Mobile install/output system files:
 - iPhone/iPad logo: [output/iphone/logo.svg](output/iphone/logo.svg)
 - iPhone/iPad build script: [output/iphone/build.ps1](output/iphone/build.ps1)
 - iPhone/iPad run script: [output/iphone/run.ps1](output/iphone/run.ps1)
+- iPhone/iPad install-from-GitHub script: [output/iphone/install-from-github.ps1](output/iphone/install-from-github.ps1)
 - Build all script: [output/build-all.ps1](output/build-all.ps1)
 
 WebServer SYNC 1.5.0 output can be modified with `-v/-vv` and the log level (set via `-l` or `RUST_LOG`).

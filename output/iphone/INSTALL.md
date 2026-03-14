@@ -55,6 +55,16 @@ Run/open iPhone/iPad control interface:
 powershell -ExecutionPolicy Bypass -File output/iphone/run.ps1 -Host <host-ip> -Port 4090
 ```
 
+## Install from GitHub
+
+From the project root, install and start in one step:
+
+```text
+powershell -ExecutionPolicy Bypass -File output/iphone/install-from-github.ps1 -HostIp <host-ip> -Port 4090
+```
+
+This installs WebServer SYNC 1.5.0 from GitHub using Cargo and starts the server for iPhone/iPad access.
+
 ## API app files in this folder
 
 - `api-app.example.json` (app-level API config)
