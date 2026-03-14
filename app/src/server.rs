@@ -34,7 +34,7 @@ pub(crate) async fn run(
     }
 
 
-    let config = builder.validate().context("invalid WebServer SYNC 1.5.0 config")?;
+    let config = builder.validate().context("invalid WebServer SYNC config")?;
     let (server, controller) = Server::build(config.clone());
     let public_url = public_url(&config, args);
 
@@ -57,13 +57,13 @@ pub(crate) async fn run(
     if !args.is_muted() {
         if config.public_authority().is_some() {
             bunt::println!(
-                "{$bold}WebServer SYNC 1.5.0 started!{/$} Listening on {$yellow+intense+bold}http://{}{/$} {$dimmed}(public: {}){/$}",
+                "{$bold}WebServer SYNC started!{/$} Listening on {$yellow+intense+bold}http://{}{/$} {$dimmed}(public: {}){/$}",
                 bind_addr,
                 public_url,
             );
         } else {
             bunt::println!(
-                "{$bold}WebServer SYNC 1.5.0 started!{/$} Listening on {$yellow+intense+bold}{}{/$}",
+                "{$bold}WebServer SYNC started!{/$} Listening on {$yellow+intense+bold}{}{/$}",
                 public_url,
             );
         }
@@ -197,7 +197,7 @@ fn pretty_print_config(config: &Config, args: &Args, watched_paths: &[&Path]) {
     println!();
     bunt::println!("   {$cyan+bold}▸ Routing:{/$}");
     bunt::println!(
-        "     ├╴ Requests to {[blue+intense]} are handled internally by WebServer SYNC 1.5.0",
+        "     ├╴ Requests to {[blue+intense]} are handled internally by WebServer SYNC",
         config.control_path(),
     );
 
@@ -239,7 +239,7 @@ fn pretty_print_config(config: &Config, args: &Args, watched_paths: &[&Path]) {
         );
     }
     bunt::println!(
-            "     • To reload all browser sessions, run {$yellow}webserver-sync-1-5-0 reload{}{}{/$}",
+            "     • To reload all browser sessions, run {$yellow}webserver-sync reload{}{}{/$}",
         if args.port != DEFAULT_PORT { format!(" -p {}", args.port) } else { "".into() },
         args.control_path.as_ref()
             .map(|p| format!(" --control-path {}", p))
