@@ -46,6 +46,42 @@ In either case, you can *mount* additional directories at an URL path with `-m/-
 The syntax is `-m <url-path>:<fs-path>`, for example `-m fonts:frontend/static`.
 An HTTP request for `/fonts/foo.woff2` would be answered with the file `frontend/static/foo.woff2` or with 404 if said file does not exist.
 
+### Node.js / Java / TypeScript / other platforms
+
+WebServer SYNC 1.5.0 can run in front of almost any local web server using `proxy` mode.
+
+Node.js (Express, Fastify, Nest, Next dev server):
+
+```text
+webserver-sync-1-5-0 proxy localhost:3000
+```
+
+Java (Spring Boot, Quarkus, Micronaut):
+
+```text
+webserver-sync-1-5-0 proxy localhost:8080
+```
+
+TypeScript frontends (Vite, Webpack dev server, Angular, React):
+
+```text
+webserver-sync-1-5-0 proxy localhost:5173
+```
+
+Proxy backend + mount static assets:
+
+```text
+webserver-sync-1-5-0 proxy localhost:3000 -m /assets:./dist
+```
+
+Static-only projects (no backend server):
+
+```text
+webserver-sync-1-5-0 serve .
+```
+
+This works for other platforms too (Python, PHP, Ruby, .NET, Go, etc.) as long as they expose an HTTP endpoint on localhost.
+
 All paths that are served by WebServer SYNC 1.5.0 are automatically watched by default.
 This means that any file change in any of those directories will lead to all browser sessions reloading automatically.
 You can watch additional paths (that are not mounted/served) with `-w/--watch`.
@@ -125,6 +161,8 @@ Mobile install/output system files:
 - Build all script: [output/build-all.ps1](output/build-all.ps1)
 - One-button install launcher: [output/install-from-github.cmd](output/install-from-github.cmd)
 - One-button install docs: [output/INSTALL-FROM-GITHUB.md](output/INSTALL-FROM-GITHUB.md)
+- Terminal install script: [output/install-from-terminal.ps1](output/install-from-terminal.ps1)
+- Terminal install docs: [output/TERMINAL-INSTALL.md](output/TERMINAL-INSTALL.md)
 
 WebServer SYNC 1.5.0 output can be modified with `-v/-vv` and the log level (set via `-l` or `RUST_LOG`).
 

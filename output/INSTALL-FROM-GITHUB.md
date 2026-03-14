@@ -25,3 +25,7 @@ or
 ```text
 powershell -ExecutionPolicy Bypass -File output/install-from-github.ps1 -Platform iphone -HostIp <host-ip> -Port 4090
 ```
+
+## Terminal-only system (non-interactive)
+
+Use [install-from-terminal.ps1](install-from-terminal.ps1) when you want CLI-only install with no prompt.
