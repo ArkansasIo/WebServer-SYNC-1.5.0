@@ -163,6 +163,9 @@ Mobile install/output system files:
 - One-button install docs: [output/INSTALL-FROM-GITHUB.md](output/INSTALL-FROM-GITHUB.md)
 - Terminal install script: [output/install-from-terminal.ps1](output/install-from-terminal.ps1)
 - Terminal install docs: [output/TERMINAL-INSTALL.md](output/TERMINAL-INSTALL.md)
+- GUI launcher (one-click): [output/gui-system-ui.cmd](output/gui-system-ui.cmd)
+- GUI launcher script: [output/gui-system-ui.ps1](output/gui-system-ui.ps1)
+- GUI docs: [output/GUI-SYSTEM-UI.md](output/GUI-SYSTEM-UI.md)
 
 WebServer SYNC 1.5.0 output can be modified with `-v/-vv` and the log level (set via `-l` or `RUST_LOG`).
 

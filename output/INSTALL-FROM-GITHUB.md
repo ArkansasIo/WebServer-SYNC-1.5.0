@@ -29,3 +29,7 @@ powershell -ExecutionPolicy Bypass -File output/install-from-github.ps1 -Platfor
 ## Terminal-only system (non-interactive)
 
 Use [install-from-terminal.ps1](install-from-terminal.ps1) when you want CLI-only install with no prompt.
+
+## GUI system UI
+
+Use [gui-system-ui.cmd](gui-system-ui.cmd) for a desktop button-based launcher.
