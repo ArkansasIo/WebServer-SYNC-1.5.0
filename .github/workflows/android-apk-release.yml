@@ -24,7 +24,9 @@ jobs:
         run: ./gradlew assembleDebug
 
       - name: Upload APK
-        uses:Actions/upload-release-asset@v1
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
           asset_path: app/build/outputs/apk/debug/app-debug.apk
