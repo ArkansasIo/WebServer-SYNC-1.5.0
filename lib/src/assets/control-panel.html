@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>WebServer SYNC 1.5.0 Control Panel</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #0f172a;
+      --card: #1e293b;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --ok: #34d399;
+      --warn: #fb7185;
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f8fafc;
+        --card: #ffffff;
+        --text: #0f172a;
+        --muted: #475569;
+        --accent: #0284c7;
+        --ok: #059669;
+        --warn: #dc2626;
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .container {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 14px;
+      box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    }
+
+    h1, h2 {
+      margin: 0 0 8px;
+      line-height: 1.25;
+    }
+
+    h1 { font-size: 1.25rem; }
+    h2 { font-size: 1rem; }
+
+    p, li {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.4;
+      word-break: break-word;
+    }
+
+    ul {
+      margin: 8px 0 0;
+      padding-left: 18px;
+      display: grid;
+      gap: 6px;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      color: var(--text);
+      background: rgba(148,163,184,.18);
+      border-radius: 6px;
+      padding: 1px 5px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .row {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: 1fr;
+    }
+
+    input, textarea, button {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid rgba(148,163,184,.35);
+      background: transparent;
+      color: var(--text);
+      padding: 12px;
+      font-size: 16px;
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    button {
+      cursor: pointer;
+      border: 0;
+      background: var(--accent);
+      color: white;
+      font-weight: 600;
+    }
+
+    .secondary {
+      background: #64748b;
+    }
+
+    .danger {
+      background: var(--warn);
+    }
+
+    .status {
+      min-height: 22px;
+      font-weight: 600;
+      color: var(--ok);
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: .95rem;
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <section class="card">
+      <h1>WebServer SYNC 1.5.0 Control Panel</h1>
+      <p class="muted">Designed for Android phones/tablets and iPad/iOS 15+ Safari/Chrome.</p>
+    </section>
+
+    <section class="card grid">
+      <div>
+        <h2>Server URL</h2>
+        <p><code id="public-url">{{ public_url }}</code></p>
+      </div>
+      <div>
+        <h2>Bind Address</h2>
+        <p><code id="bind-addr">{{ bind_addr }}</code></p>
+      </div>
+      <div>
+        <h2>Control Path</h2>
+        <p><code id="control-path">{{ control_path }}</code></p>
+      </div>
+      <div>
+        <h2>Proxy Target</h2>
+        <p><code id="proxy-target">{{ proxy_target }}</code></p>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Mounted Directories</h2>
+      <ul id="mounts">{{ mounts_list }}</ul>
+    </section>
+
+    <section class="card row">
+      <h2>Actions</h2>
+      <button id="reload-btn">Reload All Browser Sessions</button>
+      <textarea id="message-input" placeholder="Type a message overlay for connected browsers"></textarea>
+      <button id="message-btn" class="secondary">Send Message Overlay</button>
+      <button id="clear-btn" class="secondary">Clear Message Overlay</button>
+      <button id="shutdown-btn" class="danger">Stop Server</button>
+      <p class="muted">Start command (when stopped): <code>webserver-sync-1-5-0 serve .</code></p>
+      <p id="status" class="status">Ready</p>
+    </section>
+
+    <section class="card">
+      <h2>Live Status</h2>
+      <p class="muted" id="live-status">Checking…</p>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const controlPath = "{{ control_path }}";
+      const statusEl = document.getElementById("status");
+      const liveEl = document.getElementById("live-status");
+      const messageInput = document.getElementById("message-input");
+
+      const setStatus = (msg, error) => {
+        statusEl.style.color = error ? "#fb7185" : "#34d399";
+        statusEl.textContent = msg;
+      };
+
+      const post = async (subPath, body) => {
+        const res = await fetch(`${controlPath}${subPath}`, {
+          method: "POST",
+          body,
+          headers: body ? { "Content-Type": "text/plain; charset=UTF-8" } : undefined,
+        });
+        if (!res.ok) {
+          throw new Error(`Request failed with ${res.status}`);
+        }
+      };
+
+      document.getElementById("reload-btn").addEventListener("click", async () => {
+        try {
+          await post("/reload");
+          setStatus("Reload command sent", false);
+        } catch (err) {
+          setStatus(err.message, true);
+        }
+      });
+
+      document.getElementById("message-btn").addEventListener("click", async () => {
+        try {
+          await post("/message", messageInput.value || "");
+          setStatus("Message sent", false);
+        } catch (err) {
+          setStatus(err.message, true);
+        }
+      });
+
+      document.getElementById("clear-btn").addEventListener("click", async () => {
+        try {
+          await post("/message", "");
+          setStatus("Message cleared", false);
+        } catch (err) {
+          setStatus(err.message, true);
+        }
+      });
+
+      document.getElementById("shutdown-btn").addEventListener("click", async () => {
+        const ok = confirm("Stop WebServer SYNC 1.5.0 now?");
+        if (!ok) {
+          return;
+        }
+
+        try {
+          await post("/shutdown");
+          setStatus("Shutdown signal sent", false);
+        } catch (err) {
+          setStatus(err.message, true);
+        }
+      });
+
+      const refreshStatus = async () => {
+        try {
+          const res = await fetch(`${controlPath}/status`, { cache: "no-store" });
+          if (!res.ok) {
+            throw new Error(`HTTP ${res.status}`);
+          }
+
+          const data = await res.json();
+          liveEl.textContent = `Online · ${data.public_url} · mounts: ${data.mounts.length}`;
+        } catch (_) {
+          liveEl.textContent = "Offline (server stopped or unreachable)";
+        }
+      };
+
+      refreshStatus();
+      setInterval(refreshStatus, 5000);
+    })();
+  </script>
+</body>
+</html>

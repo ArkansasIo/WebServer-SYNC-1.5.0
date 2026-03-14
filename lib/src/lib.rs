@@ -142,10 +142,16 @@ impl Controller {
     pub fn show_message(&self, msg: impl Into<String>) {
         let _ = self.0.send(Action::Message(msg.into()));
     }
+
+    /// Gracefully stops the running server.
+    pub fn shutdown(&self) {
+        let _ = self.0.send(Action::Shutdown);
+    }
 }
 
 #[derive(Debug, Clone)]
 enum Action {
     Reload,
     Message(String),
+    Shutdown,
 }

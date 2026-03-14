@@ -46,6 +46,10 @@ pub(crate) async fn handle_connection(
                         log::trace!("Sending message WS command");
                         format!("message\n{}", msg)
                     }
+                    Ok(Action::Shutdown) => {
+                        log::trace!("Received shutdown action for WS task");
+                        continue;
+                    }
                 };
 
                 if let Err(e) = websocket.send(Message::text(data)).await {

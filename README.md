@@ -64,6 +64,44 @@ webserver-sync-1-5-0 serve . --bind 0.0.0.0 --public-host 192-168-1-23.sslip.io:
 
 With `--public-host`, WebServer SYNC 1.5.0 uses that hostname in printed URLs, `--open`, and proxy redirect rewriting.
 
+### Mobile control interface (Android + iPad/iOS 15+)
+
+Open the control panel in any modern mobile browser:
+
+```text
+http://<host>:<port>/~~penguin/panel
+```
+
+This interface lets you:
+
+- reload all connected browser sessions,
+- send or clear overlay messages,
+- view live server status and mounted routes,
+- stop the running server with a shutdown action.
+
+To start the server again after shutdown, run:
+
+```text
+webserver-sync-1-5-0 serve .
+```
+
+### App API
+
+The control path also exposes a JSON API that can be used by Android/iOS apps
+or any HTTP client:
+
+- `GET /~~penguin/api/v1` → API info
+- `GET /~~penguin/api/v1/status` → server status/config summary
+- `POST /~~penguin/api/v1/reload` → reload all browser sessions
+- `POST /~~penguin/api/v1/message` → send overlay message (UTF-8 text body)
+- `POST /~~penguin/api/v1/shutdown` → stop server
+
+Example:
+
+```text
+curl -X POST http://127.0.0.1:4090/~~penguin/api/v1/reload
+```
+
 WebServer SYNC 1.5.0 output can be modified with `-v/-vv` and the log level (set via `-l` or `RUST_LOG`).
 
 For the full CLI documentation run `webserver-sync-1-5-0 --help` or `webserver-sync-1-5-0 <subcommand> --help`.
