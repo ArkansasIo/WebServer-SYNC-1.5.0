@@ -92,7 +92,7 @@ fn adjust_request(req: &mut Request<Body>, target: &ProxyTarget) {
         // [2]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Encoding
         let value = header.to_str()
             .expect("'accept-encoding' header value contains non-ASCII bytes");
-        let new_value = filter_encodings(&value);
+        let new_value = filter_encodings(value);
 
         if new_value.is_empty() {
             req.headers_mut().remove(header::ACCEPT_ENCODING);
@@ -112,7 +112,7 @@ const SUPPORTED_COMPRESSIONS: &[&str] = &["gzip", "br", "identity"];
 fn download_body_error(e: hyper::Error, uri: &Uri, ctx: &Context) -> Response<Body> {
     log::warn!("Failed to download full response from proxy target");
     let msg = format!("Failed to download response from {}\n\n{}", uri, e);
-    return gateway_error(&msg, e, &ctx.config);
+    gateway_error(&msg, e, &ctx.config)
 }
 
 async fn adjust_response(
@@ -258,7 +258,7 @@ async fn adjust_response(
     Response::from_parts(parts, new_body.into())
 }
 
-/// We inject our own JS that connects via WS to the penguin server. These two
+/// We inject our own JS that connects via WS to the WebServer SYNC 1.5.0 server. These two
 /// things need to be allowed by the Content-Security-Policy. Usually they are,
 /// but in some cases we need to modify that header to allow for it.
 /// Unfortunately, it's a bit involved, but also fairly straight forward.
@@ -278,7 +278,7 @@ fn rewrite_csp(header: &mut HeaderValue) {
             // "Strip leading and trailing ASCII whitespace" and then splitting
             //  by whitespace to separate the directive name and all directive
             //  values.
-            let mut split = part.trim().split_whitespace();
+            let mut split = part.split_whitespace();
             let name = split.next()
                 .expect("empty split iterator for non-empty string")
                 .to_ascii_lowercase();
@@ -306,11 +306,11 @@ fn rewrite_csp(header: &mut HeaderValue) {
     // in those cases.
     let scripts_from_self_allowed = directives.get("script-src")
         .or_else(|| directives.get("default-src"))
-        .map_or(true, |v| v.contains(&"'self'") || v.contains(&"*"));
+        .is_none_or(|v| v.contains(&"'self'") || v.contains(&"*"));
 
     let connect_to_self_allowed = directives.get("connect-src")
         .or_else(|| directives.get("default-src"))
-        .map_or(true, |v| v.contains(&"'self'") || v.contains(&"*"));
+        .is_none_or(|v| v.contains(&"'self'") || v.contains(&"*"));
 
 
     if scripts_from_self_allowed && connect_to_self_allowed {
@@ -366,13 +366,17 @@ fn rewrite_location(header: &mut HeaderValue, target: &ProxyTarget, config: &Con
 
     // If the redirect points to the proxy target itself (i.e. an internal
     // redirect), we change the `location` header so that the browser changes
-    // the path & query, but stays on the Penguin host.
+    // the path & query, but stays on the WebServer SYNC 1.5.0 host.
     if uri.authority.as_ref() == Some(&target.authority) {
-        // Penguin itself only listens on HTTP
+        // WebServer SYNC 1.5.0 itself only listens on HTTP
         uri.scheme = Some(Scheme::HTTP);
-        let authority = config.bind_addr.to_string()
-            .try_into()
-            .expect("bind addr is not a valid authority");
+        let authority = config.public_authority()
+            .cloned()
+            .unwrap_or_else(|| {
+                config.bind_addr.to_string()
+                    .try_into()
+                    .expect("bind addr is not a valid authority")
+            });
         uri.authority = Some(authority);
 
         let uri = Uri::from_parts(uri).expect("bug: failed to build URI");
@@ -402,7 +406,7 @@ fn gateway_error(msg: &str, e: hyper::Error, config: &Config) -> Response<Body> 
 
 /// Regularly polls the proxy target until it is reachable again. Once it is, it
 /// sends a reload action and stops. Makes sure (via `ctx`) that just one
-/// polling instance exists per penguin server.
+/// polling instance exists per WebServer SYNC 1.5.0 server.
 fn start_polling(ctx: &ProxyContext, target: &ProxyTarget, actions: Sender<Action>) {
     // We only need one task polling the target.
     let is_polling = Arc::clone(&ctx.is_polling_target);
@@ -462,6 +466,8 @@ fn filter_encodings(orig: &str) -> String {
 
 #[cfg(test)]
 mod tests {
+    use hyper::header::HeaderValue;
+
     #[test]
     fn encoding_filter() {
         use super::filter_encodings as filter;
@@ -525,5 +531,20 @@ mod tests {
             "default-src 'self'; script-src https:",
             "default-src 'self'; script-src https: 'self'; ",
         );
+    }
+
+    #[test]
+    fn rewrite_location_uses_public_authority_when_present() {
+        let config = crate::Server::bind(([127, 0, 0, 1], 4090).into())
+            .proxy("http://backend.example:3000".parse().unwrap())
+            .set_public_authority("demo.sslip.io:4090".parse().unwrap())
+            .validate()
+            .unwrap();
+        let target = config.proxy().unwrap().clone();
+        let mut header = HeaderValue::from_static("http://backend.example:3000/login");
+
+        super::rewrite_location(&mut header, &target, &config);
+
+        assert_eq!(header.to_str().unwrap(), "http://demo.sslip.io:4090/login");
     }
 }

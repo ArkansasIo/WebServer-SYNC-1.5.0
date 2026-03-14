@@ -1,16 +1,16 @@
 [package]
 name = "penguin"
-version = "0.1.9"
+version = "1.5.0"
 authors = ["Lukas Kalbertodt <lukas.kalbertodt@gmail.com>"]
 edition = "2018"
 
 description = """
 Dev server with auto-reload, static file server, proxy support, and more.
-Language and framework agnostic. This is the library crate, but Penguin exists
+Language and framework agnostic. This is the library crate, but WebServer SYNC 1.5.0 exists
 as a CLI app, too.
 """
-documentation = "https://docs.rs/penguin/"
-repository = "https://github.com/LukasKalbertodt/penguin/"
+documentation = "https://github.com/ArkansasIo/WebServer-SYNC-1.5.0"
+repository = "https://github.com/ArkansasIo/WebServer-SYNC-1.5.0"
 readme = "../README.md"
 license = "MIT/Apache-2.0"
 

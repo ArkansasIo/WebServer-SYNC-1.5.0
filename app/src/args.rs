@@ -9,13 +9,13 @@ pub(crate) const DEFAULT_PORT: u16 = 4090;
 
 #[derive(Debug, StructOpt)]
 #[structopt(
-    name = "Penguin",
+    name = "WebServer SYNC 1.5.0",
     about = "Language-agnostic dev server that can serve directories and forward \
         requests to a proxy.",
     setting(structopt::clap::AppSettings::VersionlessSubcommands),
 )]
 pub(crate) struct Args {
-    /// Port of the Penguin server.
+    /// Port of the WebServer SYNC 1.5.0 server.
     #[structopt(short, long, default_value = "4090", global = true)]
     pub(crate) port: u16,
 
@@ -46,6 +46,16 @@ pub(crate) struct Args {
     /// Automatically opens the browser with the URL of this server.
     #[structopt(long, global = true)]
     pub(crate) open: bool,
+
+    /// Public host name used in printed URLs, browser opening, and proxy redirects.
+    ///
+    /// This is useful when WebServer SYNC 1.5.0 is reachable under a different hostname
+    /// than its bind address, for example with a free wildcard DNS service
+    /// like `192-168-1-23.sslip.io`.
+    ///
+    /// Specify the host name only or `host:port` if the public port differs.
+    #[structopt(long, global = true)]
+    pub(crate) public_host: Option<String>,
 
     #[structopt(subcommand)]
     pub(crate) cmd: Command,
@@ -80,7 +90,7 @@ pub(crate) enum Command {
 
     /// Reloads all browser sessions.
     ///
-    /// This sends a reload request to a locally running penguin server. The
+    /// This sends a reload request to a locally running WebServer SYNC 1.5.0 server. The
     /// port and control path can be specified, if they are non-standard.
     Reload,
 }
@@ -91,7 +101,7 @@ pub(crate) struct ServeOptions {
     ///
     /// Example: '--mount assets:/home/peter/images'. Can be specified multiple
     /// times. If you only want to mount one directory in the root, rather use
-    /// the `penguin serve` subcommand.
+    /// the `webserver-sync-1-5-0 serve` subcommand.
     ///
     /// By default, directories specified here will be watched for file changes
     /// to automatically reload browser sessions. You can disable that with
@@ -104,7 +114,7 @@ pub(crate) struct ServeOptions {
     )]
     pub(crate) mounts: Vec<Mount>,
 
-    /// When specified, penguin will not automatically watch the mounted paths.
+    /// When specified, WebServer SYNC 1.5.0 will not automatically watch the mounted paths.
     #[structopt(long)]
     pub(crate) no_auto_watch: bool,
 

@@ -25,13 +25,18 @@ pub(crate) async fn run(
     if let Some(control_path) = &args.control_path {
         builder = builder.set_control_path(control_path);
     }
+    if let Some(public_host) = &args.public_host {
+        let authority = public_host.parse().context("invalid public host")?;
+        builder = builder.set_public_authority(authority);
+    }
     if let Some(target) = proxy {
         builder = builder.proxy(target.clone())
     }
 
 
-    let config = builder.validate().context("invalid penguin config")?;
+    let config = builder.validate().context("invalid WebServer SYNC 1.5.0 config")?;
     let (server, controller) = Server::build(config.clone());
+    let public_url = public_url(&config, args);
 
     let watched_paths = if !options.no_auto_watch {
         mounts.into_iter()
@@ -50,10 +55,18 @@ pub(crate) async fn run(
 
     // Nice output of what is being done
     if !args.is_muted() {
-        bunt::println!(
-            "{$bold}Penguin started!{/$} Listening on {$yellow+intense+bold}http://{}{/$}",
-            bind_addr,
-        );
+        if config.public_authority().is_some() {
+            bunt::println!(
+                "{$bold}WebServer SYNC 1.5.0 started!{/$} Listening on {$yellow+intense+bold}http://{}{/$} {$dimmed}(public: {}){/$}",
+                bind_addr,
+                public_url,
+            );
+        } else {
+            bunt::println!(
+                "{$bold}WebServer SYNC 1.5.0 started!{/$} Listening on {$yellow+intense+bold}{}{/$}",
+                public_url,
+            );
+        }
 
         if !args.is_quiet() {
             pretty_print_config(&config, args, &watched_paths);
@@ -72,7 +85,7 @@ pub(crate) async fn run(
         thread::spawn(move || {
             thread::sleep(Duration::from_millis(50));
 
-            let url = format!("http://{}", bind_addr);
+            let url = public_url;
             match open::that(url) {
                 Ok(_) => {}
                 Err(e) => bunt::println!(
@@ -88,7 +101,14 @@ pub(crate) async fn run(
     Ok(())
 }
 
-fn watch<'a>(
+fn public_url(config: &Config, args: &Args) -> String {
+    match config.public_authority() {
+        Some(authority) => format!("http://{}", authority),
+        None => format!("http://{}:{}", args.bind, args.port),
+    }
+}
+
+fn watch(
     controller: Controller,
     options: &ServeOptions,
     paths: &[&Path],
@@ -171,11 +191,13 @@ fn watch<'a>(
 }
 
 fn pretty_print_config(config: &Config, args: &Args, watched_paths: &[&Path]) {
+    let public_url = public_url(config, args);
+
     // Routing description
     println!();
     bunt::println!("   {$cyan+bold}▸ Routing:{/$}");
     bunt::println!(
-        "     ├╴ Requests to {[blue+intense]} are handled internally by penguin",
+        "     ├╴ Requests to {[blue+intense]} are handled internally by WebServer SYNC 1.5.0",
         config.control_path(),
     );
 
@@ -210,8 +232,14 @@ fn pretty_print_config(config: &Config, args: &Args, watched_paths: &[&Path]) {
     // Random hints
     println!();
     bunt::println!("   {$cyan+bold}▸ Hints:{/$}");
+    if config.public_authority().is_some() {
+        bunt::println!(
+            "     • Public URL: {[yellow]} {$dimmed}(useful with free wildcard DNS providers like sslip.io){/$}",
+            public_url,
+        );
+    }
     bunt::println!(
-        "     • To reload all browser sessions, run {$yellow}penguin reload{}{}{/$}",
+            "     • To reload all browser sessions, run {$yellow}webserver-sync-1-5-0 reload{}{}{/$}",
         if args.port != DEFAULT_PORT { format!(" -p {}", args.port) } else { "".into() },
         args.control_path.as_ref()
             .map(|p| format!(" --control-path {}", p))

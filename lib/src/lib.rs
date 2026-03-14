@@ -1,7 +1,7 @@
-//! Penguin is a dev server with features like auto-reloading, a static file
+//! WebServer SYNC 1.5.0 is a dev server with features like auto-reloading, a static file
 //! server, and proxy-support. It is available both, as an app and as a library.
 //! You are currently reading the library docs. If you are interested in the CLI
-//! app, see [the README](https://github.com/LukasKalbertodt/penguin#readme).
+//! app, see [the README](https://github.com/ArkansasIo/WebServer-SYNC-1.5.0#readme).
 //!
 //! This library essentially allows you to configure and then start an HTTP
 //! server. After starting the server you get a [`Controller`] which allows you
@@ -81,7 +81,7 @@ pub use config::{
     Builder, Config, ConfigError, DEFAULT_CONTROL_PATH, Mount, ProxyTarget, ProxyTargetParseError
 };
 
-/// Penguin server: the main type of this library.
+/// WebServer SYNC 1.5.0 server: the main type of this library.
 ///
 /// This type implements `Future`, and can thus be `await`ed. If you do not
 /// `await` (or otherwise poll) this, the server will not start serving.

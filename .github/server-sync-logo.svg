@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">WebServer SYNC 1.5.0 logo</title>
+  <desc id="desc">An original logo for WebServer SYNC 1.5.0 with a server icon, sync arrows, and brand text.</desc>
+  <rect width="1200" height="800" fill="#f5efc8"/>
+  <g transform="translate(600 250)">
+    <circle cx="0" cy="0" r="134" fill="#1f1d5a" opacity="0.08"/>
+    <rect x="-92" y="-92" width="184" height="184" rx="28" fill="#1f1d5a"/>
+    <rect x="-64" y="-50" width="128" height="28" rx="10" fill="#f6f1d6"/>
+    <rect x="-64" y="-10" width="128" height="28" rx="10" fill="#f6f1d6"/>
+    <rect x="-64" y="30" width="128" height="28" rx="10" fill="#f6f1d6"/>
+    <circle cx="42" cy="-36" r="6" fill="#ff9d1e"/>
+    <circle cx="24" cy="4" r="6" fill="#48b8e8"/>
+    <circle cx="42" cy="44" r="6" fill="#ff9d1e"/>
+    <path d="M-138 -16c18-51 65-86 122-86" fill="none" stroke="#ff9d1e" stroke-width="26" stroke-linecap="round"/>
+    <path d="M-36 -119l30 15-24 24" fill="none" stroke="#ff9d1e" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M138 16c-18 51-65 86-122 86" fill="none" stroke="#48b8e8" stroke-width="26" stroke-linecap="round"/>
+    <path d="M36 119l-30-15 24-24" fill="none" stroke="#48b8e8" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="600" y="520" text-anchor="middle" font-family="Verdana, Geneva, sans-serif" font-size="76" font-weight="700" letter-spacing="12" fill="#1f1d5a">WEBSERVER SYNC</text>
+  <text x="600" y="590" text-anchor="middle" font-family="Verdana, Geneva, sans-serif" font-size="32" font-weight="700" letter-spacing="10" fill="#ff9d1e">LIVE RELOAD   FILE SERVER   PROXY</text>
+  <text x="600" y="640" text-anchor="middle" font-family="Verdana, Geneva, sans-serif" font-size="26" font-weight="700" letter-spacing="6" fill="#1f1d5a">VERSION 1.5.0</text>
+</svg>

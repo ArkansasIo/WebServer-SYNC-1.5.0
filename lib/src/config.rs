@@ -5,7 +5,7 @@ use hyper::{Uri, http::uri};
 use crate::{Controller, Server};
 
 
-/// The URI path which is used for penguin internal control functions (e.g.
+/// The URI path which is used for WebServer SYNC 1.5.0 internal control functions (e.g.
 /// opening WS connections).
 ///
 /// We need a path that:
@@ -15,7 +15,7 @@ use crate::{Controller, Server};
 /// - doesn't use any invalid characters for URLs.
 pub const DEFAULT_CONTROL_PATH: &str = "/~~penguin";
 
-/// A valid penguin server configuration.
+/// A valid WebServer SYNC 1.5.0 server configuration.
 ///
 /// To create a configuration, use [`Server::bind`] to obtain a [`Builder`]
 /// which can be turned into a `Config`.
@@ -24,12 +24,15 @@ pub struct Config {
     /// The port/socket address the server should be listening on.
     pub(crate) bind_addr: SocketAddr,
 
+    /// Optional public authority used in advertised URLs and proxy redirects.
+    pub(crate) public_authority: Option<uri::Authority>,
+
     /// Proxy target that HTTP requests should be forwarded to.
     pub(crate) proxy: Option<ProxyTarget>,
 
     /// A list of directories to serve as a file server. As expected from other
     /// file servers, this lists the contents of directories and serves files
-    /// directly. HTML files are injected with the penguin JS code.
+    /// directly. HTML files are injected with the WebServer SYNC 1.5.0 JS code.
     pub(crate) mounts: Vec<Mount>,
 
     /// HTTP requests to this path are interpreted by this library to perform
@@ -41,6 +44,10 @@ pub struct Config {
 }
 
 impl Config {
+    pub fn public_authority(&self) -> Option<&uri::Authority> {
+        self.public_authority.as_ref()
+    }
+
     pub fn proxy(&self) -> Option<&ProxyTarget> {
         self.proxy.as_ref()
     }
@@ -64,6 +71,7 @@ impl Builder {
     pub(crate) fn new(bind_addr: SocketAddr) -> Self {
         Self(Config {
             bind_addr,
+            public_authority: None,
             proxy: None,
             control_path: DEFAULT_CONTROL_PATH.into(),
             mounts: Vec::new(),
@@ -123,6 +131,12 @@ impl Builder {
     pub fn set_control_path(mut self, path: impl Into<String>) -> Self {
         self.0.control_path = path.into();
         normalize_path(&mut self.0.control_path);
+        self
+    }
+
+    /// Sets the public authority used in advertised URLs and proxy redirect rewriting.
+    pub fn set_public_authority(mut self, authority: uri::Authority) -> Self {
+        self.0.public_authority = Some(authority);
         self
     }
 
@@ -203,7 +217,7 @@ impl FromStr for ProxyTarget {
     fn from_str(src: &str) -> Result<Self, Self::Err> {
         let parts = src.parse::<Uri>()?.into_parts();
         let has_real_path = parts.path_and_query.as_ref()
-            .map_or(false, |pq| !pq.as_str().is_empty() && pq.as_str() != "/");
+            .is_some_and(|pq| !pq.as_str().is_empty() && pq.as_str() != "/");
         if has_real_path {
             return Err(ProxyTargetParseError::HasPath);
         }
@@ -213,7 +227,7 @@ impl FromStr for ProxyTarget {
             .or_else(|| {
                 // If the authority is a loopback IP or "localhost", we default to HTTP as scheme.
                 let ip = authority.host().parse::<IpAddr>();
-                if authority.host() == "localhost" || ip.map_or(false, |ip| ip.is_loopback()) {
+                if authority.host() == "localhost" || ip.is_ok_and(|ip| ip.is_loopback()) {
                     Some(uri::Scheme::HTTP)
                 } else {
                     None

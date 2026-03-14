@@ -1,15 +1,15 @@
 [package]
 name = "penguin-app"
-version = "0.2.7"
+version = "1.5.0"
 authors = ["Lukas Kalbertodt <lukas.kalbertodt@gmail.com>"]
 edition = "2018"
 
 description = """
 Dev server with auto-reload, static file server, proxy support, and more.
-Language and framework agnostic. This is the CLI app, but Penguin exists
+Language and framework agnostic. This is the CLI app, but WebServer SYNC 1.5.0 exists
 as a library, too.
 """
-repository = "https://github.com/LukasKalbertodt/penguin/"
+repository = "https://github.com/ArkansasIo/WebServer-SYNC-1.5.0"
 readme = "../README.md"
 license = "MIT/Apache-2.0"
 
@@ -18,7 +18,7 @@ categories = ["development-tools", "command-line-utilities", "web-programming::h
 
 
 [[bin]]
-name = "penguin"
+name = "webserver-sync-1-5-0"
 path = "src/main.rs"
 
 
@@ -28,7 +28,7 @@ bunt = "0.2.4"
 log = "0.4"
 notify = "4"
 open = "2"
-penguin = { version = "0.1.9", path = "../lib" }
+penguin = { version = "1.5.0", path = "../lib" }
 pretty_env_logger = "0.4"
 structopt = "0.3"
 tokio = { version = "1", features = ["rt", "macros"]}

@@ -163,10 +163,10 @@ async fn serve_file(
     // TODO: maybe we should return 403 if the file can't be read due to
     // permissions? Generally, the `unwrap`s in this function are... meh.
 
-    let mime = mime_guess::from_path(&path).first();
-    if mime.as_ref().map_or(false, |mime| mime.as_ref().starts_with("text/html")) {
+    let mime = mime_guess::from_path(path).first();
+    if mime.as_ref().is_some_and(|mime| mime.as_ref().starts_with("text/html")) {
         let raw = fs::read(path).await.expect("failed to read file");
-        let html = inject::into(&raw, &config);
+        let html = inject::into(&raw, config);
 
         Response::builder()
             .header("Content-Type", "text/html")

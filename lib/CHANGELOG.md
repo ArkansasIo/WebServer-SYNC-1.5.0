@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to the penguin **library** will be documented here.
+All notable changes to the WebServer SYNC 1.5.0 **library** will be documented here.
 
 
 ## [Unreleased]
@@ -9,7 +9,7 @@ All notable changes to the penguin **library** will be documented here.
 - Fix `Content-Range` header for HTTP range requests
 
 ## [0.1.8] - 2023-11-26
-- Add basic HTTP range request support for the file server. With this, video files served by Penguin can be played by Safari.
+- Add basic HTTP range request support for the file server. With this, video files served by WebServer SYNC 1.5.0 can be played by Safari.
 - Add body sniffing to detect HTML content (and insert reload script) more often (see #11)
 
 ## [0.1.7] - 2022-06-22
@@ -18,7 +18,7 @@ All notable changes to the penguin **library** will be documented here.
 
 ## [0.1.6] - 2022-06-08
 ### Fixed
-- `Content-Security-Policy` (CSP) header is now potentially modified in proxy mode if required for penguin's injected script (`'self'` is potentially added to `script-src` and `connect-src`).
+- `Content-Security-Policy` (CSP) header is now potentially modified in proxy mode if required for WebServer SYNC 1.5.0's injected script (`'self'` is potentially added to `script-src` and `connect-src`).
 
 ### Improved
 - Update dependencies (this bumps the MSRV to 1.56!)
@@ -26,7 +26,7 @@ All notable changes to the penguin **library** will be documented here.
 ## [0.1.5] - 2022-04-19
 ### Added
 - Add feature `vendored-openssl` to compile `openssl` from source
-  [PR #10](https://github.com/LukasKalbertodt/penguin/pull/10) (Thanks @philipahlberg)
+  [PR #10](https://github.com/ArkansasIo/WebServer-SYNC-1.5.0/pull/10) (Thanks @philipahlberg)
 
 ### Improved
 - Updated dependencies
@@ -37,7 +37,7 @@ All notable changes to the penguin **library** will be documented here.
   after a 404 reply.
 - After a getting a gateway error, automatically reload all browser sessions
   once the proxy is reachable again. This is done by regularly polling the
-  proxy from the Penguin server.
+  proxy from the WebServer SYNC 1.5.0 server.
 
 ### Fixed
 - When using the proxy, the `host` HTTP-header is adjusted to the proxy target
@@ -61,7 +61,7 @@ All notable changes to the penguin **library** will be documented here.
   the "server" HTTP header.
 
 ### Fixed
-- Make Penguin work with non-`127.0.0.1` loopback addresses.
+- Make WebServer SYNC 1.5.0 work with non-`127.0.0.1` loopback addresses.
 - Fix warning about directory traversal attack incorrectly being emitted.
 
 ## [0.1.1] - 2021-03-07
@@ -78,13 +78,13 @@ All notable changes to the penguin **library** will be documented here.
 - Everything
 
 
-[Unreleased]: https://github.com/LukasKalbertodt/penguin/compare/lib-v0.1.9...HEAD
-[0.1.9]: https://github.com/LukasKalbertodt/penguin/compare/lib-v0.1.8...lib-v0.1.9
-[0.1.8]: https://github.com/LukasKalbertodt/penguin/compare/lib-v0.1.7...lib-v0.1.8
-[0.1.7]: https://github.com/LukasKalbertodt/penguin/compare/lib-v0.1.6...lib-v0.1.7
-[0.1.6]: https://github.com/LukasKalbertodt/penguin/compare/lib-v0.1.5...lib-v0.1.6
-[0.1.5]: https://github.com/LukasKalbertodt/penguin/compare/lib-v0.1.4...lib-v0.1.5
-[0.1.4]: https://github.com/LukasKalbertodt/penguin/compare/lib-v0.1.3...lib-v0.1.4
-[0.1.3]: https://github.com/LukasKalbertodt/penguin/compare/lib-v0.1.2...lib-v0.1.3
-[0.1.2]: https://github.com/LukasKalbertodt/penguin/compare/lib-v0.1.1...lib-v0.1.2
-[0.1.1]: https://github.com/LukasKalbertodt/penguin/compare/lib-v0.1.0...lib-v0.1.1
+[Unreleased]: https://github.com/ArkansasIo/WebServer-SYNC-1.5.0/compare/lib-v0.1.9...HEAD
+[0.1.9]: https://github.com/ArkansasIo/WebServer-SYNC-1.5.0/compare/lib-v0.1.8...lib-v0.1.9
+[0.1.8]: https://github.com/ArkansasIo/WebServer-SYNC-1.5.0/compare/lib-v0.1.7...lib-v0.1.8
+[0.1.7]: https://github.com/ArkansasIo/WebServer-SYNC-1.5.0/compare/lib-v0.1.6...lib-v0.1.7
+[0.1.6]: https://github.com/ArkansasIo/WebServer-SYNC-1.5.0/compare/lib-v0.1.5...lib-v0.1.6
+[0.1.5]: https://github.com/ArkansasIo/WebServer-SYNC-1.5.0/compare/lib-v0.1.4...lib-v0.1.5
+[0.1.4]: https://github.com/ArkansasIo/WebServer-SYNC-1.5.0/compare/lib-v0.1.3...lib-v0.1.4
+[0.1.3]: https://github.com/ArkansasIo/WebServer-SYNC-1.5.0/compare/lib-v0.1.2...lib-v0.1.3
+[0.1.2]: https://github.com/ArkansasIo/WebServer-SYNC-1.5.0/compare/lib-v0.1.1...lib-v0.1.2
+[0.1.1]: https://github.com/ArkansasIo/WebServer-SYNC-1.5.0/compare/lib-v0.1.0...lib-v0.1.1

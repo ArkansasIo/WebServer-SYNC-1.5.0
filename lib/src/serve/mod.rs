@@ -48,7 +48,7 @@ async fn handle_internal_errors(
     future: impl Future<Output = Response<Body>>,
 ) -> Result<Response<Body>, Infallible> {
     fn internal_server_error(msg: &str) -> Response<Body> {
-        let body = format!("Internal server error: this is a bug in Penguin!\n\n{}\n", msg);
+        let body = format!("Internal server error: this is a bug in WebServer SYNC 1.5.0!\n\n{}\n", msg);
         Response::builder()
             .status(StatusCode::INTERNAL_SERVER_ERROR)
             .header("Server", SERVER_HEADER)
@@ -68,7 +68,7 @@ async fn handle_internal_errors(
             // `panic!` like `println!`), this is either `&str` or `String`.
             let msg = panic.downcast_ref::<String>()
                 .map(|s| s.as_str())
-                .or(panic.downcast_ref::<&str>().map(|s| *s));
+                .or(panic.downcast_ref::<&str>().copied());
 
             log::error!("HTTP handler panicked: {}", msg.unwrap_or("-"));
 
@@ -169,7 +169,7 @@ async fn handle_control(
                 }
             }
 
-            _ => bad_request("Invalid request to libpenguin control path\n"),
+            _ => bad_request("Invalid request to WebServer SYNC 1.5.0 control path\n"),
         }
     }
 }
@@ -199,4 +199,4 @@ fn not_found(config: &Config) -> Response<Body> {
         .expect("bug: invalid response")
 }
 
-const SERVER_HEADER: &str = concat!("Penguin v", env!("CARGO_PKG_VERSION"));
+const SERVER_HEADER: &str = concat!("WebServer SYNC ", env!("CARGO_PKG_VERSION"));

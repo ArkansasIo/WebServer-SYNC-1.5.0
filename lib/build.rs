@@ -12,7 +12,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     // Cargo already just calls this script when the `.ts` file was changed.
     // However, we add this extra check to make sure we don't try to compile it
     // again if it's not necessary. This means that devs checking out the repo
-    // or `cargo install`ing penguin don't need to have `tsc` installed (since
+    // or `cargo install`ing WebServer SYNC 1.5.0 don't need to have `tsc` installed (since
     // the generated file is checked into git).
     let need_compiling = !outfile.exists()
         || infile.metadata()?.modified()? > outfile.metadata()?.modified()?;

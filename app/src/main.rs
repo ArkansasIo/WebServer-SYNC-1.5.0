@@ -1,4 +1,4 @@
-use std::{env, iter};
+use std::env;
 
 use anyhow::{Context, Result};
 use log::LevelFilter;
@@ -16,7 +16,7 @@ mod server;
 async fn main() {
     if let Err(e) = run().await {
         let header = "An error occured :-(";
-        let line = iter::repeat('━').take(header.len() + 4).collect::<String>();
+        let line = "━".repeat(header.len() + 4);
 
         eprintln!();
         bunt::eprintln!(" {$yellow+intense}┏{}┓{/$}", line);
@@ -101,15 +101,15 @@ async fn reload(args: &Args) -> Result<()> {
 }
 
 fn print_welcome_message() {
-    bunt::println!("{$blue+bold+intense}Penguin 🐧{/$}");
+    bunt::println!("{$blue+bold+intense}WebServer SYNC 1.5.0{/$}");
     println!();
     println!("You have to specify a subcommand. Example usages:");
-    bunt::println!("   ‣ Serve a directory: {$yellow}penguin serve ./target{/$}");
-    bunt::println!("   ‣ Reload all browser sessions: {$yellow}penguin reload{/$}");
+    bunt::println!("   ‣ Serve a directory: {$yellow}webserver-sync-1-5-0 serve ./target{/$}");
+    bunt::println!("   ‣ Reload all browser sessions: {$yellow}webserver-sync-1-5-0 reload{/$}");
     bunt::println!("   ‣ Forward requests to proxy and serve one directory on a subpath:");
-    bunt::println!("         {$yellow}penguin proxy localhost:8000 -m /assets:frontend/dist{/$}");
+    bunt::println!("         {$yellow}webserver-sync-1-5-0 proxy localhost:8000 -m /assets:frontend/dist{/$}");
 
     println!();
-    bunt::println!("For more information, run {$yellow}penguin -h{/$} for a short CLI overview");
-    bunt::println!("or {$yellow}penguin --help{/$} for a detailed description.");
+    bunt::println!("For more information, run {$yellow}webserver-sync-1-5-0 -h{/$} for a short CLI overview");
+    bunt::println!("or {$yellow}webserver-sync-1-5-0 --help{/$} for a detailed description.");
 }
