@@ -1,0 +1,19 @@
+{
+  "platform": "iphone-ipad",
+  "bundleId": "io.arkansas.webserversync.mobile",
+  "appName": "WebServer SYNC Mobile",
+  "version": "1.5.0",
+  "minimumOS": "iOS 15.0",
+  "api": {
+    "baseUrl": "http://192.168.1.23:4090/~~penguin/api/v1",
+    "healthPath": "/status",
+    "reloadPath": "/reload",
+    "messagePath": "/message",
+    "shutdownPath": "/shutdown"
+  },
+  "ui": {
+    "logo": "./logo.svg",
+    "loadingScreen": "./loading-screen.html",
+    "splashScreen": "./splash-screen.html"
+  }
+}

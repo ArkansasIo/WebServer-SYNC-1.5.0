@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WebServer SYNC Loading</title>
+  <style>
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background: #0f172a; color: #e2e8f0; display: grid; place-items: center; height: 100vh; }
+    .box { text-align: center; }
+    .spinner { width: 42px; height: 42px; border: 4px solid #334155; border-top-color: #38bdf8; border-radius: 50%; margin: 0 auto 16px; animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <main class="box">
+    <div class="spinner" aria-hidden="true"></div>
+    <h1>WebServer SYNC 1.5.0</h1>
+    <p>Connecting to API...</p>
+  </main>
+</body>
+</html>

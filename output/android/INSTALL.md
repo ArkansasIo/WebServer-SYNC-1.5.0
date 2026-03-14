@@ -36,6 +36,34 @@ POST http://<host-ip>:4090/~~penguin/api/v1/message
 POST http://<host-ip>:4090/~~penguin/api/v1/shutdown
 ```
 
+## Compile / build / run
+
+From the project root:
+
+```text
+cargo build -p penguin-app
+```
+
+Build Android API app output bundle:
+
+```text
+powershell -ExecutionPolicy Bypass -File output/android/build.ps1
+```
+
+Run/open Android control interface:
+
+```text
+powershell -ExecutionPolicy Bypass -File output/android/run.ps1 -Host <host-ip> -Port 4090
+```
+
+## API app files in this folder
+
+- `api-app.example.json` (app-level API config)
+- `api-config.example.json` (endpoint template)
+- `loading-screen.html` (loading view)
+- `splash-screen.html` (splash view)
+- `logo.svg` (app/logo asset)
+
 ## Notes
 
 - If mobile cannot connect, check firewall/network profile on host.

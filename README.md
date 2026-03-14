@@ -106,8 +106,21 @@ Mobile install/output system files:
 
 - Android: [output/android/INSTALL.md](output/android/INSTALL.md)
 - Android API config template: [output/android/api-config.example.json](output/android/api-config.example.json)
+- Android app config: [output/android/api-app.example.json](output/android/api-app.example.json)
+- Android loading screen: [output/android/loading-screen.html](output/android/loading-screen.html)
+- Android splash screen: [output/android/splash-screen.html](output/android/splash-screen.html)
+- Android logo: [output/android/logo.svg](output/android/logo.svg)
+- Android build script: [output/android/build.ps1](output/android/build.ps1)
+- Android run script: [output/android/run.ps1](output/android/run.ps1)
 - iPhone/iPad: [output/iphone/INSTALL.md](output/iphone/INSTALL.md)
 - iPhone/iPad API config template: [output/iphone/api-config.example.json](output/iphone/api-config.example.json)
+- iPhone/iPad app config: [output/iphone/api-app.example.json](output/iphone/api-app.example.json)
+- iPhone/iPad loading screen: [output/iphone/loading-screen.html](output/iphone/loading-screen.html)
+- iPhone/iPad splash screen: [output/iphone/splash-screen.html](output/iphone/splash-screen.html)
+- iPhone/iPad logo: [output/iphone/logo.svg](output/iphone/logo.svg)
+- iPhone/iPad build script: [output/iphone/build.ps1](output/iphone/build.ps1)
+- iPhone/iPad run script: [output/iphone/run.ps1](output/iphone/run.ps1)
+- Build all script: [output/build-all.ps1](output/build-all.ps1)
 
 WebServer SYNC 1.5.0 output can be modified with `-v/-vv` and the log level (set via `-l` or `RUST_LOG`).
 
