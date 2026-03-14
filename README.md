@@ -102,6 +102,13 @@ Example:
 curl -X POST http://127.0.0.1:4090/~~penguin/api/v1/reload
 ```
 
+Mobile install/output system files:
+
+- Android: [output/android/INSTALL.md](output/android/INSTALL.md)
+- Android API config template: [output/android/api-config.example.json](output/android/api-config.example.json)
+- iPhone/iPad: [output/iphone/INSTALL.md](output/iphone/INSTALL.md)
+- iPhone/iPad API config template: [output/iphone/api-config.example.json](output/iphone/api-config.example.json)
+
 WebServer SYNC 1.5.0 output can be modified with `-v/-vv` and the log level (set via `-l` or `RUST_LOG`).
 
 For the full CLI documentation run `webserver-sync-1-5-0 --help` or `webserver-sync-1-5-0 <subcommand> --help`.

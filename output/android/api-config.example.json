@@ -1,0 +1,16 @@
+{
+  "platform": "android",
+  "appName": "WebServer SYNC Mobile",
+  "apiVersion": "v1",
+  "baseUrl": "http://192.168.1.23:4090/~~penguin/api/v1",
+  "endpoints": {
+    "info": "/",
+    "status": "/status",
+    "reload": "/reload",
+    "message": "/message",
+    "shutdown": "/shutdown"
+  },
+  "requestHeaders": {
+    "Content-Type": "text/plain; charset=UTF-8"
+  }
+}
