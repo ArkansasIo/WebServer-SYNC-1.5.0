@@ -123,6 +123,8 @@ Mobile install/output system files:
 - iPhone/iPad run script: [output/iphone/run.ps1](output/iphone/run.ps1)
 - iPhone/iPad install-from-GitHub script: [output/iphone/install-from-github.ps1](output/iphone/install-from-github.ps1)
 - Build all script: [output/build-all.ps1](output/build-all.ps1)
+- One-button install launcher: [output/install-from-github.cmd](output/install-from-github.cmd)
+- One-button install docs: [output/INSTALL-FROM-GITHUB.md](output/INSTALL-FROM-GITHUB.md)
 
 WebServer SYNC 1.5.0 output can be modified with `-v/-vv` and the log level (set via `-l` or `RUST_LOG`).
 

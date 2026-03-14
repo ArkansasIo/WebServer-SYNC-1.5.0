@@ -16,10 +16,21 @@ if ([string]::IsNullOrWhiteSpace($SitePath)) {
 }
 
 Write-Output "Installing WebServer SYNC 1.5.0 from GitHub..."
-cargo install --git $RepoUrl --path app --force
+cargo install --git $RepoUrl penguin-app --force
+if ($LASTEXITCODE -ne 0) {
+    throw "cargo install failed with exit code $LASTEXITCODE"
+}
+
+$cargoHome = if ([string]::IsNullOrWhiteSpace($env:CARGO_HOME)) {
+    Join-Path $env:USERPROFILE ".cargo"
+} else {
+    $env:CARGO_HOME
+}
+$installedExe = Join-Path (Join-Path $cargoHome "bin") "webserver-sync-1-5-0.exe"
+$exe = if (Test-Path $installedExe) { $installedExe } else { "webserver-sync-1-5-0" }
 
 Write-Output "Starting server for Android devices..."
-Start-Process -FilePath "webserver-sync-1-5-0" -ArgumentList @("serve", $SitePath, "--bind", "0.0.0.0", "--port", "$Port") | Out-Null
+Start-Process -FilePath $exe -ArgumentList @("serve", $SitePath, "--bind", "0.0.0.0", "--port", "$Port") | Out-Null
 
 if ([string]::IsNullOrWhiteSpace($HostIp)) {
     Write-Output "Installed and started. Open on Android: http://<host-ip>:$Port/~~penguin/panel"

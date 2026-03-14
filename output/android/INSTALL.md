@@ -58,6 +58,14 @@ powershell -ExecutionPolicy Bypass -File output/android/run.ps1 -Host <host-ip> 
 
 ## Install from GitHub
 
+One-button option from the output folder:
+
+```text
+output/install-from-github.cmd
+```
+
+Then select `1` (Android).
+
 From the project root, install and start in one step:
 
 ```text

@@ -57,6 +57,14 @@ powershell -ExecutionPolicy Bypass -File output/iphone/run.ps1 -Host <host-ip> -
 
 ## Install from GitHub
 
+One-button option from the output folder:
+
+```text
+output/install-from-github.cmd
+```
+
+Then select `2` (iPhone/iPad).
+
 From the project root, install and start in one step:
 
 ```text
