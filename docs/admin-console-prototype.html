@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>WebServer SYNC — Admin Console Concept</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1220;--panel:#111c2e;--line:#29384e;--text:#e5edf8;--muted:#91a2bb;--accent:#4db7ff;--warn:#ffcc66;--ok:#5ee0a0}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{padding:20px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+h1,h2,h3,p{margin-top:0}h1{font-size:1.25rem;margin-bottom:2px}h2{font-size:1.05rem}small,.muted{color:var(--muted)}
+.layout{display:grid;grid-template-columns:230px minmax(0,1fr);min-height:calc(100vh - 83px)}
+nav{padding:16px;border-right:1px solid var(--line)}nav button{display:block;width:100%;text-align:left;background:transparent;color:var(--text);border:1px solid transparent;border-radius:8px;padding:10px;margin:3px 0;cursor:pointer}nav button[aria-current=page]{background:#18324b;border-color:#2b5879}main{padding:24px;min-width:0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:14px}.stat{font-size:1.5rem;font-weight:700}.pill{display:inline-block;border-radius:999px;padding:2px 9px;font-size:.8rem;background:#27364a;color:var(--muted)}.pill.warn{color:var(--warn)}.pill.ok{color:var(--ok)}table{border-collapse:collapse;width:100%}th,td{text-align:left;border-bottom:1px solid var(--line);padding:10px 6px;vertical-align:top}button.action{border:1px solid #3675a0;background:#173b59;color:#e5f5ff;border-radius:8px;padding:9px 12px;cursor:pointer}button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.notice{border-left:3px solid var(--warn);padding:10px 12px;background:#292719;color:#ffe6ad}section[hidden]{display:none}.menu-label{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:18px 10px 8px}
+@media(max-width:700px){.layout{grid-template-columns:1fr}nav{border-right:0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px}nav button{margin:0}main{padding:14px}header{padding:16px}}
+</style>
+</head>
+<body>
+<header><div><h1>WebServer SYNC</h1><small>Administration console · interface specification preview</small></div><span class="pill warn">Prototype — not connected to backend</span></header>
+<div class="layout">
+<nav aria-label="Administration sections">
+<div class="menu-label">Overview</div>
+<button data-page="dashboard" aria-current="page">Dashboard</button>
+<button data-page="sites">Sites &amp; routes</button>
+<button data-page="reload">Live reload</button>
+<div class="menu-label">Integrations</div>
+<button data-page="dns">DNS management</button>
+<button data-page="apache">Apache</button>
+<button data-page="php">PHP runtime</button>
+<button data-page="database">Databases</button>
+<div class="menu-label">Operations</div>
+<button data-page="logs">Logs &amp; diagnostics</button>
+<button data-page="settings">Settings &amp; security</button>
+</nav>
+<main>
+<section id="dashboard">
+<h2>Server overview</h2><p class="muted">This static mockup illustrates the planned admin UI. It does not query or change the running server.</p>
+<div class="grid">
+<article class="card"><small>Core server</small><div class="stat">Development</div><span class="pill ok">Existing feature</span><p class="muted">Static hosting, proxy and live reload exist in the current project.</p></article>
+<article class="card"><small>DNS integration</small><div class="stat">Not configured</div><span class="pill warn">Planned</span><p class="muted">No DNS record changes are available in this prototype.</p></article>
+<article class="card"><small>Runtime integrations</small><div class="stat">Not configured</div><span class="pill warn">Planned</span><p class="muted">Apache, PHP-FPM and database integrations require separate implementation.</p></article>
+</div>
+<div class="card"><h2>Implementation boundary</h2><div class="notice">Do not expose this development server or a future administration API publicly until authentication, authorization, CSRF/origin protections, secret handling and a security review are complete.</div></div>
+</section>
+<section id="sites" hidden><h2>Sites &amp; routes</h2><div class="card"><p>Planned manager for static mounts, upstream HTTP services, route validation and virtual-host profiles.</p><table><thead><tr><th>Capability</th><th>Status</th></tr></thead><tbody><tr><td>Static directory mounts</td><td><span class="pill ok">Core exists</span></td></tr><tr><td>Reverse proxy</td><td><span class="pill ok">Core exists</span></td></tr><tr><td>Persistent site registry</td><td><span class="pill warn">Not implemented</span></td></tr><tr><td>Virtual-host manager</td><td><span class="pill warn">Not implemented</span></td></tr></tbody></table></div></section>
+<section id="reload" hidden><h2>Live reload</h2><div class="card"><p>The current product includes file watching, reload commands and browser overlay messaging.</p><p class="muted">Connected-session visibility, watcher health and per-project settings are planned enhancements.</p></div></section>
+<section id="dns" hidden><h2>DNS management</h2><div class="card"><span class="pill warn">Not implemented</span><p>Planned provider integration: zones, A/AAAA/CNAME/MX/TXT/SRV records, validation, preview, apply, audit and lookup verification.</p><p class="muted">The existing public-host option only formats advertised URLs and redirects; it does not edit DNS.</p></div></section>
+<section id="apache" hidden><h2>Apache integration</h2><div class="card"><span class="pill warn">Not implemented</span><p>Planned adapter for binary detection, config validation, virtual-host previews, status and rollback. Apache should remain a separate service.</p></div></section>
+<section id="php" hidden><h2>PHP runtime</h2><div class="card"><span class="pill warn">Not implemented</span><p>Planned HTTP dev-server proxy first; optional PHP-FPM/FastCGI later with explicit script mapping, upload limits and timeout handling. PHP must never be served as plain source.</p></div></section>
+<section id="database" hidden><h2>Databases</h2><div class="card"><span class="pill warn">Not implemented</span><p>Planned read-only connection health checks for MySQL/MariaDB and an optional protected link to a separately installed phpMyAdmin.</p><p class="muted">Do not store database passwords in browser code, public configuration, or logs.</p></div></section>
+<section id="logs" hidden><h2>Logs &amp; diagnostics</h2><div class="card"><p>Planned structured request/error logs, health checks, dependency status and redacted audit events.</p></div></section>
+<section id="settings" hidden><h2>Settings &amp; security</h2><div class="card"><p>Planned versioned configuration profiles, listener settings, users and roles, API keys, origin policy, backups and audit history.</p><div class="notice">Menu visibility is not authorization. Every privileged API endpoint must independently enforce access control.</div></div></section>
+</main>
+</div>
+<script>
+(() => {
+ const buttons=[...document.querySelectorAll('nav button[data-page]')];
+ const sections=[...document.querySelectorAll('main section')];
+ function show(id){
+  for(const section of sections)section.hidden=section.id!==id;
+  for(const button of buttons){
+   if(button.dataset.page===id)button.setAttribute('aria-current','page');
+   else button.removeAttribute('aria-current');
+  }
+ }
+ for(const button of buttons)button.addEventListener('click',()=>show(button.dataset.page));
+})();
+</script>
+</body>
+</html>
