@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "profile": "local-development",
+  "listener": {
+    "bind": "127.0.0.1",
+    "port": 4090,
+    "control_path": "/~~penguin",
+    "public_host": null
+  },
+  "sites": [
+    {
+      "id": "local-static",
+      "enabled": true,
+      "mode": "static",
+      "mount_path": "/",
+      "filesystem_path": "./public"
+    },
+    {
+      "id": "local-api",
+      "enabled": false,
+      "mode": "proxy",
+      "mount_path": "/api",
+      "upstream": "http://127.0.0.1:3000"
+    }
+  ],
+  "integrations": {
+    "dns": {
+      "enabled": false,
+      "provider": null,
+      "credentials_ref": null
+    },
+    "apache": {
+      "enabled": false,
+      "binary_path": null
+    },
+    "php": {
+      "enabled": false,
+      "mode": "http-proxy",
+      "endpoint": null
+    },
+    "database": {
+      "enabled": false,
+      "engine": null,
+      "credentials_ref": null
+    }
+  }
+}
